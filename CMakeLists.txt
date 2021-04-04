@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(Dungeon)
 set(CMAKE_CXX_STANDARD 14)
-include_directories(lib)
+include_directories(includes)
 include_directories(header)
 add_executable(
         Dungeon
