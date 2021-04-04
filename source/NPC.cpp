@@ -21,6 +21,7 @@ bool NPC::triggerEvent(Object &object, Room &currRoom) {
         Player &player = dynamic_cast<Player&>(object);
         cout << "What do you want to buy? ";
         string input = Dungeon::getResponce(choices);
+        Dungeon::clearConsole();
         if (input != "x") {
             int commodityIdx = stoi(input) - 1;
             auto commodity = commodities[commodityIdx];

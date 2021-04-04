@@ -80,6 +80,7 @@ bool Player::triggerEvent(Object &object, Room& currRoom) { // print / change eq
         choices.push_back("x");
         cout << "Select the item you want to equip/use: ";
         string input = Dungeon::getResponce(choices);
+        Dungeon::clearConsole();
 
         if (input != "x") {
             int itemToEquipIdx = stoi(input) - 1;
