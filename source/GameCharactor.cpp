@@ -34,7 +34,7 @@ void GameCharactor::addToInventory(Item newItem) {
 int GameCharactor::getCalculatedDamage(int ATK, int DEF) {
     static random_device rd;
     static mt19937 gen(rd());
-    normal_distribution<double> d(1, 0.2);
+    normal_distribution<double> d(1, 0.1);
     return round(ATK*(1.0/(1.0+DEF/100.0))*d(gen));
 }
 
