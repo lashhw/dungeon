@@ -1,0 +1,14 @@
+*
+
+!source/
+!source/*
+!includes/
+!includes/*
+!header/
+!header/*
+!data/
+!data/*
+
+!CMakeLists.txt
+!main.cpp
+!.gitignore
