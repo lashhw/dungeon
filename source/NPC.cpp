@@ -3,7 +3,7 @@
 #include "Dungeon.h"
 #include <iostream>
 
-bool NPC::triggerEvent(Object &object, Room &currRoom) {
+bool NPC::triggerEvent(Object &object) {
     cout << "[" << name << "]: " <<  script << endl;
 
     vector<string> choices;

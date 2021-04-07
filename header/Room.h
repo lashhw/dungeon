@@ -2,23 +2,21 @@
 #define DUNGEON_ROOM_H
 
 #include "Object.h"
-#include "json.hpp"
 #include <vector>
 #include <memory>
-using namespace std;
-using nlohmann::json;
 
 class Object; // forward declaration
 class Room {
 public:
     Room(int index, int upRoom, int downRoom, int leftRoom, int rightRoom);
+    int getIndex() const;
     int getUpRoom() const;
     int getDownRoom() const;
     int getLeftRoom() const;
     int getRightRoom() const;
     const vector<shared_ptr<Object>> & getObjectPtrs() const;
     bool hasMonster() const;
-    void printRoom(int prevRoomIdx) const;
+    void printRoom(const Room& prevRoom) const;
     json getJson() const;
     void addObjectPtr(shared_ptr<Object> newObjectPtr);
     void removeObjectPtrByIdx(int objectPtrIdx);

@@ -2,7 +2,7 @@
 #include "Player.h"
 #include <iostream>
 
-bool Monster::triggerEvent(Object &object, Room &currRoom) {
+bool Monster::triggerEvent(Object &object) {
     Player& player = dynamic_cast<Player&>(object);
     int damage = getCalculatedDamage(player.getATK(), this->getDEF());
     this->addDamageTaken(damage);
@@ -12,12 +12,12 @@ bool Monster::triggerEvent(Object &object, Room &currRoom) {
         for (auto &item : this->equipped) {
             cout << "Item [" << item.second.getName() << "] has dropped." << endl;
             shared_ptr<Item> newItem = make_shared<Item>(item.second);
-            currRoom.addObjectPtr(newItem);
+            player.addObjectPtrInRoom(newItem);
         }
         for (auto &item : this->unequipped) {
             cout << "Item [" << item.getName() << "] has dropped." << endl;
             shared_ptr<Item> newItem = make_shared<Item>(item);
-            currRoom.addObjectPtr(newItem);
+            player.addObjectPtrInRoom(newItem);
         }
         if (this->money != 0) {
             cout << "You got $" << this->getMoney() << " from [" << this->name << "]!" << endl;

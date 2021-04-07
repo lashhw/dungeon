@@ -25,9 +25,6 @@ int Player::getDEF() const {
     for (auto &item : equipped) DEF += item.second.getDEF();
     return DEF;
 }
-int Player::getCurrRoomIdx() const {
-    return currRoomIdx;
-}
 
 void Player::printStats() const {
     stringstream unformattedSS;
@@ -64,7 +61,7 @@ void Player::printStats() const {
     cout << Dungeon::getBoxedString(unformatted, 80, 2, false, true) << endl;
 }
 
-bool Player::triggerEvent(Object &object, Room& currRoom) { // print / change equipment
+bool Player::triggerEvent(Object &object) { // print / change equipment
     printStats();
 
     if (!unequipped.empty()) {
@@ -90,8 +87,7 @@ bool Player::triggerEvent(Object &object, Room& currRoom) { // print / change eq
                 unequipped.push_back(equipped.find(itemToEquip.getType())->second);
                 equipped.find(itemToEquip.getType())->second = itemToEquip;
             } else if (itemToEquip.getType() == "usable") {
-                int damageToDecrease = 0;
-                damageToDecrease = min(itemToEquip.getHP(), damageTaken);
+                int damageToDecrease = min(itemToEquip.getHP(), damageTaken);
                 damageTaken -= damageToDecrease;
                 cout << "You healed yourself by " << damageToDecrease << " HP" << endl;
             }
@@ -104,20 +100,9 @@ string Player::getInteractMessage() const {
     return "Player: ???";
 }
 
-void Player::changeRoom(int newRoomIdx) {
-    prevRoomIdx = currRoomIdx;
-    currRoomIdx = newRoomIdx;
-}
-
-Player::Player():GameCharactor("null"){
-    currRoomIdx = prevRoomIdx = -1;
-}
-
-Player::Player(string name, const json &statsJson, int currRoomIdx, int prevRoomIdx)
-               :GameCharactor(name, statsJson), currRoomIdx(currRoomIdx), prevRoomIdx(prevRoomIdx) {}
-
-int Player::getPrevRoomIdx() const {
-    return prevRoomIdx;
+void Player::changeRoom(Room *newRoomPtr) {
+    prevRoomPtr = currRoomPtr;
+    currRoomPtr = newRoomPtr;
 }
 
 string Player::getTag() const {
@@ -126,8 +111,8 @@ string Player::getTag() const {
 
 json Player::getJson() const {
     json j = GameCharactor::getJson();
-    j["currRoom"] = currRoomIdx;
-    j["prevRoom"] = prevRoomIdx;
+    j["currRoom"] = currRoomPtr->getIndex();
+    j["prevRoom"] = prevRoomPtr->getIndex();
     return j;
 }
 
@@ -135,3 +120,25 @@ void Player::setName(string name) {
     this->name = name;
 }
 
+const Room * Player::getCurrRoomPtr() const {
+    return currRoomPtr;
+}
+
+const Room * Player::getPrevRoomPtr() const {
+    return prevRoomPtr;
+}
+
+Player::Player(string name, const json &statsJson, Room *currRoomPtr, Room *prevRoomPtr)
+              :GameCharactor(name, statsJson), currRoomPtr(currRoomPtr), prevRoomPtr(prevRoomPtr) {}
+
+void Player::addObjectPtrInRoom(shared_ptr<Object> newObjectPtr) {
+    currRoomPtr->addObjectPtr(newObjectPtr);
+}
+
+void Player::removeObjectInRoomByIdx(int objectIdxToDelete) {
+    currRoomPtr->removeObjectPtrByIdx(objectIdxToDelete);
+}
+
+void Player::changeToPrevRoom() {
+    currRoomPtr = prevRoomPtr;
+}

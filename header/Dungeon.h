@@ -21,6 +21,7 @@ public:
     static void clearConsole();
     static const string CHOICE_START;
     static const json GAME_DATA;
+    Dungeon();
     void startGame();
 private:
     pair<string, vector<string>> getChoices() const;

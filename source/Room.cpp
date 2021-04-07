@@ -42,7 +42,7 @@ bool Room::hasMonster() const {
     return false;
 }
 
-void Room::printRoom(int prevRoomIdx) const {
+void Room::printRoom(const Room& prevRoom) const {
     stringstream roomSS;
     string roomStr[12];
     roomStr[0]  = R"~( +-----------------------------------+ )~";
@@ -57,25 +57,25 @@ void Room::printRoom(int prevRoomIdx) const {
     roomStr[9]  = R"~( |               (You)               | )~";
     roomStr[10] = R"~( |                                   | )~";
     roomStr[11] = R"~( +-----------------------------------+ )~";
-    if (upRoom != -1 && (!hasMonster() || prevRoomIdx == upRoom)) {
+    if (upRoom != -1 && (!hasMonster() || prevRoom.getIndex() == upRoom)) {
         roomStr[0][17] = '\'';
         roomStr[0][18] = ' ';
         roomStr[0][19] = ' ';
         roomStr[0][20] = '\'';
     }
-    if (downRoom != -1 && (!hasMonster() || prevRoomIdx == downRoom)) {
+    if (downRoom != -1 && (!hasMonster() || prevRoom.getIndex() == downRoom)) {
         roomStr[11][17] = ',';
         roomStr[11][18] = ' ';
         roomStr[11][19] = ' ';
         roomStr[11][20] = ',';
     }
-    if (leftRoom != -1 && (!hasMonster() || prevRoomIdx == leftRoom)) {
+    if (leftRoom != -1 && (!hasMonster() || prevRoom.getIndex() == leftRoom)) {
         roomStr[4][0] = '_';
         roomStr[5][1] = ' ';
         roomStr[6][1] = ' ';
         roomStr[6][0] = '_';
     }
-    if (rightRoom != -1 && (!hasMonster() || prevRoomIdx == rightRoom)) {
+    if (rightRoom != -1 && (!hasMonster() || prevRoom.getIndex() == rightRoom)) {
         roomStr[4][38] = '_';
         roomStr[5][37] = ' ';
         roomStr[6][37] = ' ';
@@ -103,4 +103,8 @@ json Room::getJson() const {
         j["objects"].push_back(objectPtr->getJson());
     }
     return j;
+}
+
+int Room::getIndex() const {
+    return index;
 }

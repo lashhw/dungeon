@@ -22,7 +22,7 @@ int GameCharactor::getDEF() const {
     return DEF;
 }
 
-void GameCharactor::addToInventory(Item newItem) {
+void GameCharactor::addToInventory(const Item &newItem) {
     if (find(EQUIP_TYPES.begin(), EQUIP_TYPES.end(), newItem.getType()) != EQUIP_TYPES.end() &&
         equipped.find(newItem.getType()) == equipped.end()) {
         equipped.insert(pair<string, Item>(newItem.getType(), newItem));

@@ -8,10 +8,11 @@ Chest::Chest(string name, const json &contentsJson):Object(name) {
     }
 }
 
-bool Chest::triggerEvent(Object &object, Room &currRoom) {
+bool Chest::triggerEvent(Object &object) {
+    Player& player = dynamic_cast<Player&>(object);
     cout << "You opened [" << name << "]." << endl;
     for (auto &item : contents) {
-        currRoom.addObjectPtr(make_shared<Item>(item));
+        player.addObjectPtrInRoom(make_shared<Item>(item));
     }
     return true;
 }

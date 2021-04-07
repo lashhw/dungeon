@@ -86,7 +86,7 @@ void Dungeon::startGame() {
     clearConsole();
     cout << "Welcome [" << player.getName() << "]!" << endl;
     while (checkGameLogic() == indeterminate) {
-        rooms.find(player.getCurrRoomIdx())->second.printRoom(player.getPrevRoomIdx());
+        player.getCurrRoomPtr()->printRoom(*player.getPrevRoomPtr());
         auto choices = getChoices();
         cout << choices.first;
         cout << "What do you want to do? ";
@@ -95,33 +95,29 @@ void Dungeon::startGame() {
         handleAction(input);
     }
     if (checkGameLogic() == win) {
-        cout << R"(
-____   ____.__        __
-\   \ /   /|__| _____/  |_  ___________ ___.__.
- \   Y   / |  |/ ___\   __\/  _ \_  __ <   |  |
-  \     /  |  \  \___|  | (  <_> )  | \/\___  |
-   \___/   |__|\___  >__|  \____/|__|   / ____|
-                   \/                   \/
-        )";
+        cout << R"( ____   ____.__        __                        )" << endl;
+        cout << R"( \   \ /   /|__| _____/  |_  ___________ ___.__. )" << endl;
+        cout << R"(  \   Y   / |  |/ ___\   __\/  _ \_  __ <   |  | )" << endl;
+        cout << R"(   \     /  |  \  \___|  | (  <_> )  | \/\___  | )" << endl;
+        cout << R"(    \___/   |__|\___  >__|  \____/|__|   / ____| )" << endl;
+        cout << R"(                    \/                   \/      )" << endl;
     } else if (checkGameLogic() == lose) {
-        cout << R"(
-          /`._      ,
-         /     \   / \
-         ) ,-==-> /\/ \
-          )__\\/ // \  |
-         /  /' \//   | |
-        /  (  /|/    | /
-       /     //|    /,'
-      // /  (( )    '
-     //     // \    |
-    //     (#) |
-   /        )\/ \   '       ____
-  /        /#/   )         /,.__\__,,--=_,
- /         \#\  /)      __/ + \____,--==<
- //gnv_____/#/_/'      (\_\__+/_,   ---<^
-                                '==--=='
-              You Died.
-        )";
+        cout << R"(             /`._      ,                         )" << endl;
+        cout << R"(            /     \   / \                        )" << endl;
+        cout << R"(            ) ,-==-> /\/ \                       )" << endl;
+        cout << R"(             )__\\/ // \  |                      )" << endl;
+        cout << R"(            /  /' \//   | |                      )" << endl;
+        cout << R"(           /  (  /|/    | /                      )" << endl;
+        cout << R"(          /     //|    /,'                       )" << endl;
+        cout << R"(         // /  (( )    '                         )" << endl;
+        cout << R"(        //     // \    |                         )" << endl;
+        cout << R"(       //     (#) |                              )" << endl;
+        cout << R"(      /        )\/ \   '       ____              )" << endl;
+        cout << R"(     /        /#/   )         /,.__\__,,--=_,    )" << endl;
+        cout << R"(    /         \#\  /)      __/ + \____,--==<     )" << endl;
+        cout << R"(    //gnv_____/#/_/'      (\_\__+/_,   ---<^     )" << endl;
+        cout << R"(                                   '==--=='      )" << endl;
+        cout << R"(                 You Died.                       )" << endl;
     }
 }
 
@@ -138,19 +134,19 @@ void Dungeon::createPlayer() {
 }
 
 enum gameState Dungeon::checkGameLogic() const {
-    if (player.getCurrRoomIdx() == exitRoom) return win;
+    if (player.getCurrRoomPtr()->getIndex() == exitRoom) return win;
     if (player.getHP() <= 0) return lose;
     else return indeterminate;
 }
 
 pair<string, vector<string>> Dungeon::getChoices() const {
-    const Room &currRoom = rooms.find(player.getCurrRoomIdx())->second;
-    int upRoom = currRoom.getUpRoom();
-    int downRoom = currRoom.getDownRoom();
-    int leftRoom = currRoom.getLeftRoom();
-    int rightRoom = currRoom.getRightRoom();
-    auto objectPtrs = currRoom.getObjectPtrs();
-    bool hasMonster = currRoom.hasMonster();
+    const Room *currRoomPtr = player.getCurrRoomPtr();
+    int upRoom = currRoomPtr->getUpRoom();
+    int downRoom = currRoomPtr->getDownRoom();
+    int leftRoom = currRoomPtr->getLeftRoom();
+    int rightRoom = currRoomPtr->getRightRoom();
+    auto objectPtrs = currRoomPtr->getObjectPtrs();
+    bool hasMonster = currRoomPtr->hasMonster();
 
     string message;
 
@@ -195,27 +191,26 @@ pair<string, vector<string>> Dungeon::getChoices() const {
 }
 
 void Dungeon::handleAction(string actionKey) {
-    int currRoomIdx = player.getCurrRoomIdx();
-    Room &currRoom = rooms.find(currRoomIdx)->second;
+    const Room* currRoomPtr = player.getCurrRoomPtr();
     if (actionKey == "w") {
-        player.changeRoom(currRoom.getUpRoom());
+        player.changeRoom(&rooms.find(currRoomPtr->getUpRoom())->second);
     } else if (actionKey == "s") {
-        player.changeRoom(currRoom.getDownRoom());
+        player.changeRoom(&rooms.find(currRoomPtr->getDownRoom())->second);
     } else if (actionKey == "a") {
-        player.changeRoom(currRoom.getLeftRoom());
+        player.changeRoom(&rooms.find(currRoomPtr->getLeftRoom())->second);
     } else if (actionKey == "d") {
-        player.changeRoom(currRoom.getRightRoom());
+        player.changeRoom(&rooms.find(currRoomPtr->getRightRoom())->second);
     } else if (actionKey == "q") {
-        player.changeRoom(player.getPrevRoomIdx());
+        player.changeToPrevRoom();
     } else if (actionKey == "e") {
-        player.triggerEvent(player, currRoom);
+        player.triggerEvent(player);
     } else if(actionKey == "Q") {
         quitGame();
     } else {
         int objectIdx = stoi(actionKey)-1;
-        shared_ptr<Object> objectPtr = currRoom.getObjectPtrs()[objectIdx];
-        bool removeObject = objectPtr->triggerEvent(player, currRoom);
-        if (removeObject) currRoom.removeObjectPtrByIdx(objectIdx);
+        shared_ptr<Object> objectPtr = currRoomPtr->getObjectPtrs()[objectIdx];
+        bool removeObject = objectPtr->triggerEvent(player);
+        if (removeObject) player.removeObjectInRoomByIdx(objectIdx);
     }
 }
 
@@ -313,7 +308,7 @@ void Dungeon::loadJson(json gameDataJson) {
 
     json playerJson = gameDataJson["player"];
     player = Player(playerJson["name"], playerJson["stats"],
-                    playerJson["currRoom"], playerJson["prevRoom"]);
+                    &rooms.find(playerJson["currRoom"])->second, &rooms.find(playerJson["prevRoom"])->second);
 
     exitRoom = gameDataJson["exitRoom"];
 }
@@ -325,4 +320,9 @@ void Dungeon::loadFile(string fileName) {
 
 void Dungeon::clearConsole() {
     cout << string(50, '\n') << flush;
+}
+
+Dungeon::Dungeon():
+    player("null", {}, nullptr, nullptr) {
+    rooms.reserve(1000); // maximum 1000 rooms
 }

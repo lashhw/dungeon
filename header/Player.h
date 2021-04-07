@@ -9,24 +9,26 @@ using nlohmann::json;
 
 class Player : public GameCharactor {
 public:
-    Player(string name, const json& statsJson, int currRoomIdx, int prevRoomIdx);
-    Player();
-    int getCurrRoomIdx() const;
-    int getPrevRoomIdx() const;
+    Player(string name, const json& statsJson, Room *currRoomPtr, Room *prevRoomPtr);
     void printStats() const;
+    const Room * getCurrRoomPtr() const;
+    const Room * getPrevRoomPtr() const;
     void setName(string name);
-    void changeRoom(int newRoomIdx);
+    void changeRoom(Room *newRoomPtr);
+    void changeToPrevRoom();
+    void addObjectPtrInRoom(shared_ptr<Object> newObjectPtr);
+    void removeObjectInRoomByIdx(int objectIdxToDelete);
     virtual int getMaxHP() const override;
     virtual int getATK() const override;
     virtual int getDEF() const override;
-    virtual bool triggerEvent(Object &object, Room &currRoom) override;
+    virtual bool triggerEvent(Object &object) override;
     virtual string getInteractMessage() const override;
     virtual string getTag() const override;
     virtual json getJson() const override;
 
 private:
-    int currRoomIdx;
-    int prevRoomIdx;
+    Room *currRoomPtr;
+    Room *prevRoomPtr;
 };
 
 #endif //DUNGEON_PLAYER_H

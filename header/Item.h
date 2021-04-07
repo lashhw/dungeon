@@ -2,9 +2,6 @@
 #define DUNGEON_ITEM_H
 
 #include "Object.h"
-#include "Room.h"
-#include "json.hpp"
-using nlohmann::json;
 
 class Item : public Object {
 public:
@@ -14,7 +11,7 @@ public:
     int getDEF() const;
     string getType() const;
     string getInfo(bool withType = false) const;
-    virtual bool triggerEvent(Object &object, Room &currRoom) override;
+    virtual bool triggerEvent(Object &object) override;
     virtual string getInteractMessage() const override;
     virtual string getTag() const override;
     virtual json getJson() const override;

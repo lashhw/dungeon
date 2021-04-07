@@ -14,7 +14,7 @@ Item::Item(const string &name, const json &properties):Object(name) {
     }
 }
 
-bool Item::triggerEvent(Object &object, Room &currRoom) {
+bool Item::triggerEvent(Object &object) {
     Player& player = dynamic_cast<Player&>(object);
     player.addToInventory(*this);
     cout << "Item [" << name << "] has added into your inventory." << endl;

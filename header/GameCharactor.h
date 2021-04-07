@@ -5,8 +5,6 @@
 #include "Item.h"
 #include <vector>
 #include <unordered_map>
-#include "json.hpp"
-using nlohmann::json;
 
 class GameCharactor : public Object {
 public:
@@ -22,7 +20,7 @@ public:
     void setDamageTaken(int damage);
     void addEXP(int exp);
     void setMoney(int newMoney);
-    void addToInventory(Item newItem);
+    void addToInventory(const Item &newItem);
     virtual int getMaxHP() const;
     virtual int getATK() const;
     virtual int getDEF() const;

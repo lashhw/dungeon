@@ -2,12 +2,11 @@
 #define DUNGEON_NPC_H
 
 #include "GameCharactor.h"
-#include "Room.h"
 
 class NPC : public GameCharactor {
 public:
     NPC(string name, string script, const json &commoditiesJson);
-    virtual bool triggerEvent(Object &object, Room &currRoom) override;
+    virtual bool triggerEvent(Object &object) override;
     virtual string getInteractMessage() const override;
     virtual string getTag() const override;
     virtual json getJson() const override;
