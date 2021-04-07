@@ -324,6 +324,6 @@ void Dungeon::clearConsole() {
 }
 
 Dungeon::Dungeon():
-    player("null", {}, nullptr, nullptr) {
+    player("unnamed_player", {}, nullptr, nullptr) {
     rooms.reserve(1000); // maximum 1000 rooms
 }

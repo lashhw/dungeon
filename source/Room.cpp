@@ -2,7 +2,6 @@
 #include "Monster.h"
 
 #include <iostream>
-#include <sstream>
 #include <string>
 
 Room::Room(int index, int upRoom, int downRoom, int leftRoom, int rightRoom)
@@ -44,7 +43,6 @@ bool Room::hasMonster() const {
 }
 
 void Room::printRoom(const Room& prevRoom) const {
-    stringstream roomSS;
     string roomStr[12];
     roomStr[0]  = R"~( +-----------------------------------+ )~";
     roomStr[1]  = R"~( |                                   | )~";

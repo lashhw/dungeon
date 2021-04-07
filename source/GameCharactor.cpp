@@ -35,7 +35,7 @@ void GameCharactor::addToInventory(const Item &newItem) {
 int GameCharactor::getCalculatedDamage(int ATK, int DEF) {
     static random_device rd;
     static mt19937 gen(rd());
-    normal_distribution<double> d(1, 0.1);
+    static normal_distribution<double> d(1, 0.1);
     return round(ATK*(1.0/(1.0+DEF/100.0))*d(gen));
 }
 
@@ -76,7 +76,7 @@ GameCharactor::GameCharactor(string name, const json& statsJson) : Object(name) 
 
     if (statsJson.find("unequipped") != statsJson.end()) {
         for (auto &itemJson : statsJson["unequipped"]) {
-            unequipped.push_back(Item(itemJson["name"], itemJson["properties"]));
+            unequipped.emplace_back(itemJson["name"], itemJson["properties"]);
         }
     }
 }

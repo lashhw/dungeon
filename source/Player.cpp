@@ -31,7 +31,7 @@ void Player::printStats() const {
     stringstream unformattedSS;
     int LV = getLV();
     unformattedSS << "Name: " << name << endl
-                  << "LV: " << LV << " " << getBar(EXP-getLVRequirement(LV), getLVRequirement(LV+1)) << endl
+                  << "LV: " << LV << " " << getBar(EXP-getLVRequirement(LV), getLVRequirement(LV+1)-getLVRequirement(LV)) << endl
                   << "HP: " << getBar(getHP(), getMaxHP()) << endl
                   << "ATK: " << getATK() << endl
                   << "DEF: " << getDEF() << endl

@@ -7,10 +7,10 @@
 bool NPC::triggerEvent(Object &object) {
     cout << "[" << name << "]: " <<  script << endl;
 
-    vector<string> choices;
     if (!commodities.empty()) {
+        vector<string> choices;
         int count = 0;
-        for (auto &commodity : commodities) {
+        for (const auto &commodity : commodities) {
             count++;
             cout << Dungeon::CHOICE_START << commodity.second << " $" << commodity.first
                  << " (" << count << ")" << endl;

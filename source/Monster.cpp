@@ -6,6 +6,7 @@
 bool Monster::triggerEvent(Object &object) {
     Player& player = dynamic_cast<Player&>(object);
     int damage = getCalculatedDamage(player.getATK(), this->getDEF());
+    damage = min(damage, this->getHP());
     this->addDamageTaken(damage);
     cout << "You deal " << damage << " damage to [" << this->name << "]." << endl;
     if (this->getHP() <= 0) {
@@ -29,7 +30,7 @@ bool Monster::triggerEvent(Object &object) {
             cout << "You got " << this->EXP << " EXP from [" << this->name << "]!" << endl;
             player.addEXP(this->EXP);
             int newLV = player.getLV();
-            if (oldLV != newLV) {
+            if (newLV >= oldLV) {
                 cout << "You levelled up! Your HP is full now." << endl;
                 player.setDamageTaken(0);
             }
@@ -38,6 +39,7 @@ bool Monster::triggerEvent(Object &object) {
     } else {
         cout << *this << endl;
         damage = getCalculatedDamage(this->getATK(), player.getDEF());
+        damage = min(damage, player.getHP());
         player.addDamageTaken(damage);
         cout << "[" << this->name << "] " << "deals " << damage << " damage to you." << endl;
         cout << player << endl;
