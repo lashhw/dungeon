@@ -3,9 +3,8 @@
 
 #include "GameCharactor.h"
 #include "Room.h"
-#include "json.hpp"
+
 #include <iostream>
-using nlohmann::json;
 
 class Player : public GameCharactor {
 public:

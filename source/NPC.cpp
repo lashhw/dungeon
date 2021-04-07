@@ -1,6 +1,7 @@
 #include "NPC.h"
 #include "Player.h"
 #include "Dungeon.h"
+
 #include <iostream>
 
 bool NPC::triggerEvent(Object &object) {

@@ -2,6 +2,7 @@
 #include "Monster.h"
 #include "Chest.h"
 #include "NPC.h"
+
 #include "trim.hpp"
 #include <fstream>
 #include <iostream>

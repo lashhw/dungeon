@@ -1,4 +1,5 @@
 #include "GameCharactor.h"
+
 #include <iostream>
 #include <random>
 

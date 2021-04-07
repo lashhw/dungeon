@@ -1,8 +1,8 @@
 #ifndef DUNGEON_CHEST_H
 #define DUNGEON_CHEST_H
 
-#include "Object.h"
 #include "Item.h"
+
 #include <vector>
 
 class Chest : public Object {

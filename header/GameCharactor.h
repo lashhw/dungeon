@@ -1,8 +1,8 @@
 #ifndef DUNGEON_GAMECHARACTOR_H
 #define DUNGEON_GAMECHARACTOR_H
 
-#include "Object.h"
 #include "Item.h"
+
 #include <vector>
 #include <unordered_map>
 
