@@ -1,8 +1,6 @@
 #include "Monster.h"
 #include "Player.h"
 
-#include <iostream>
-
 bool Monster::triggerEvent(Object &object) {
     Player& player = dynamic_cast<Player&>(object);
     int damage = getCalculatedDamage(player.getATK(), this->getDEF());

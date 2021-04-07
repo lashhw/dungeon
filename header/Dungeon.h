@@ -18,7 +18,7 @@ public:
     static json getJsonFromFile(string fileName);
     static string getResponce(const vector<string> &choices);
     static string getResponce();
-    static string getBoxedString(string unformatted, int width, int marginLeft, bool upBorder, bool bottomBorder);
+    static string getBoxedString(string unformatted, size_t width, size_t marginLeft, bool upBorder, bool bottomBorder);
     static void clearConsole();
     static const string CHOICE_START;
     static const json GAME_DATA;

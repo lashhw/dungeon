@@ -2,7 +2,6 @@
 #include "Monster.h"
 
 #include <iostream>
-#include <string>
 
 Room::Room(int index, int upRoom, int downRoom, int leftRoom, int rightRoom)
     :index(index), upRoom(upRoom), downRoom(downRoom), leftRoom(leftRoom), rightRoom(rightRoom) {}

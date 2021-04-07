@@ -1,28 +1,27 @@
 #include "Player.h"
 #include "Dungeon.h"
 
-#include <iostream>
 #include <sstream>
 
 using namespace std;
 
 int Player::getMaxHP() const {
     int LV = getLV();
-    int HP = baseHP*(1+0.05*(LV-1)*(LV-1));
+    int HP = (int)(baseHP*(1+0.05*(LV-1)*(LV-1)));
     for (auto &item : equipped) HP += item.second.getHP();
     return HP;
 }
 
 int Player::getATK() const {
     int LV = getLV();
-    int ATK = baseATK*(1+0.05*(LV-1)*(LV-1));
+    int ATK = (int)(baseATK*(1+0.05*(LV-1)*(LV-1)));
     for (auto &item : equipped) ATK += item.second.getATK();
     return ATK;
 }
 
 int Player::getDEF() const {
     int LV = getLV();
-    int DEF = baseDEF*(1+0.05*(LV-1)*(LV-1));
+    int DEF = (int)(baseDEF*(1+0.05*(LV-1)*(LV-1)));
     for (auto &item : equipped) DEF += item.second.getDEF();
     return DEF;
 }
@@ -46,7 +45,7 @@ void Player::printStats() const {
     for (auto &type : GameCharactor::EQUIP_TYPES) {
         unformattedSS << endl;
         string typeCapitalized = type;
-        typeCapitalized[0] = toupper(typeCapitalized[0]);
+        typeCapitalized[0] = (char)toupper(typeCapitalized[0]);
         unformattedSS << string(4, ' ') << typeCapitalized << ": ";
         if (equipped.find(type) != equipped.end()) {
             unformattedSS << equipped.find(type)->second;

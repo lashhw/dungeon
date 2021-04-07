@@ -5,7 +5,6 @@
 
 #include "trim.hpp"
 #include <fstream>
-#include <iostream>
 #include <iomanip>
 
 using namespace std;
@@ -215,7 +214,7 @@ void Dungeon::handleAction(string actionKey) {
     }
 }
 
-string Dungeon::getBoxedString(string unformatted, int width, int marginLeft, bool upBorder, bool bottomBorder) {
+string Dungeon::getBoxedString(string unformatted, size_t width, size_t marginLeft, bool upBorder, bool bottomBorder) {
     stringstream unformattedSS(unformatted);
     stringstream formattedSS;
     if (upBorder) formattedSS << '+' << string(width, '-') << '+' << endl;

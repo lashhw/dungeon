@@ -2,8 +2,6 @@
 #include "Player.h"
 #include "Dungeon.h"
 
-#include <iostream>
-
 bool NPC::triggerEvent(Object &object) {
     cout << "[" << name << "]: " <<  script << endl;
 

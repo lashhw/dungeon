@@ -36,7 +36,7 @@ int GameCharactor::getCalculatedDamage(int ATK, int DEF) {
     static random_device rd;
     static mt19937 gen(rd());
     static normal_distribution<double> d(1, 0.1);
-    return round(ATK*(1.0/(1.0+DEF/100.0))*d(gen));
+    return (int)round(ATK*(1.0/(1.0+DEF/100.0))*d(gen));
 }
 
 void GameCharactor::addDamageTaken(int damage) {
@@ -96,8 +96,8 @@ ostream &operator<<(ostream &out, GameCharactor &gameCharactor) {
 
 string GameCharactor::getBar(int num, int maxNum) {
     string bar;
-    int fill, left;
-    fill = 10.0*num/maxNum;
+    size_t fill, left;
+    fill = (size_t)(10.0*num/maxNum);
     left = 10 - fill;
 
     bar += '|';

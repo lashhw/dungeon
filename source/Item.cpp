@@ -1,8 +1,6 @@
 #include "Item.h"
 #include "Player.h"
 
-#include <iostream>
-
 using nlohmann::json;
 
 Item::Item(const string &name, const json &properties):Object(name) {
