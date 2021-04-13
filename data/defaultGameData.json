@@ -3,8 +3,10 @@
     "name": "unnamed player",
     "stats": {
       "baseHP": 100,
-      "baseATK": 10,
-      "baseDEF": 10,
+      "basePATK": 5,
+      "baseMATK": 5,
+      "basePDEF": 5,
+      "baseMDEF": 5,
       "money": 0,
       "EXP": 0
     },
@@ -46,14 +48,15 @@
               "properties": {
                 "type": "chestplate",
                 "HP": 10,
-                "DEF": 10
+                "PDEF": 10,
+                "MDEF": 5
               }
             },
             {
               "name": "Worn Crossbow",
               "properties": {
                 "type": "weapon",
-                "ATK": 5
+                "PATK": 5
               }
             }
           ]
@@ -78,7 +81,8 @@
                 "name": "Elven Bow",
                 "properties": {
                   "type": "weapon",
-                  "ATK": 33
+                  "PATK": 3,
+                  "MATK": 33
                 }
               }
             }
@@ -98,8 +102,7 @@
           "name": "Slime",
           "stats": {
             "baseHP": 15,
-            "baseATK": 3,
-            "baseDEF": 0,
+            "basePATK": 3,
             "money": 7,
             "EXP": 33
           }
@@ -109,8 +112,7 @@
           "name": "Slime",
           "stats": {
             "baseHP": 15,
-            "baseATK": 3,
-            "baseDEF": 0,
+            "basePATK": 3,
             "money": 7,
             "EXP": 33
           }
@@ -120,8 +122,7 @@
           "name": "Slime",
           "stats": {
             "baseHP": 15,
-            "baseATK": 3,
-            "baseDEF": 0,
+            "basePATK": 3,
             "money": 7,
             "EXP": 33
           }
@@ -141,7 +142,7 @@
           "name": "Priest Wand",
           "properties": {
             "type": "weapon",
-            "ATK": 12
+            "MATK": 12
           }
         }
       ]
@@ -156,9 +157,10 @@
           "tag": "monster",
           "name": "Wolf",
           "stats": {
-            "baseATK": 13,
-            "baseDEF": 3,
             "baseHP": 20,
+            "basePATK": 13,
+            "basePDEF": 3,
+            "baseMDEF": 3,
             "money": 20,
             "EXP": 77
           }
@@ -190,9 +192,10 @@
           "tag": "monster",
           "name": "Fire Dragon",
           "stats": {
-            "baseATK": 33,
-            "baseDEF": 20,
             "baseHP": 100,
+            "basePATK": 33,
+            "basePDEF": 10,
+            "baseMDEF": 10,
             "money": 97,
             "EXP": 120
           },
@@ -201,7 +204,8 @@
               "name": "Iron Chestplate",
               "properties": {
                 "type": "chestplate",
-                "baseDEF": 17,
+                "basePDEF": 17,
+                "baseMDEF": 6,
                 "baseHP": 33
               }
             }
@@ -231,15 +235,16 @@
               "name": "Spiked Shield",
               "properties": {
                 "type": "shield",
-                "DEF": 36,
-                "ATK": 15
+                "PATK": 15,
+                "PDEF": 36,
+                "MDEF": 7
               }
             },
             {
               "name": "Mortorcycle Helmet",
               "properties": {
                 "type": "helmet",
-                "DEF": 23
+                "MDEF": 23
               }
             }
           ]
@@ -264,7 +269,7 @@
                 "name": "pointer",
                 "properties": {
                   "type": "weapon",
-                  "ATK": 52
+                  "MATK": 52
                 }
               }
             },
@@ -293,9 +298,8 @@
           "tag": "monster",
           "name": "virtual function",
           "stats": {
-            "baseATK": 1,
-            "baseDEF": 0,
             "baseHP": 128,
+            "baseMATK": 1,
             "EXP": 2048
           }
         }
@@ -316,7 +320,8 @@
               "properties": {
                 "type": "leggings",
                 "HP": 62,
-                "DEF": 26
+                "PDEF": 26,
+                "MDEF": 24
               }
             },
             {
@@ -324,7 +329,7 @@
               "properties": {
                 "type": "boots",
                 "HP": 21,
-                "DEF": 6
+                "PDEF": 6
               }
             }
           ]
@@ -342,9 +347,10 @@
           "tag": "monster",
           "name": "d/dx",
           "stats": {
-            "baseATK": 27,
             "baseHP": 111,
-            "baseDEF": 12,
+            "baseMATK": 27,
+            "basePDEF": 12,
+            "baseMDEF": 12,
             "money": 500,
             "EXP": 987
           },
@@ -353,8 +359,9 @@
               "name": "Chain Helmet",
               "properties": {
                 "type": "helmet",
-                "DEF": 20,
-                "HP": 67
+                "HP": 67,
+                "PDEF": 10,
+                "MDEF": 25
               }
             }
           ]
@@ -372,9 +379,8 @@
           "tag": "monster",
           "name": "Abstract class",
           "stats": {
-            "baseATK": 0,
             "baseHP": 1,
-            "baseDEF": 0,
+            "baseMATK": 1,
             "money": 1,
             "EXP": 1
           }
@@ -401,9 +407,11 @@
           "tag": "monster",
           "name": "BOSS: OOP assignment",
           "stats": {
-            "baseATK": 123,
             "baseHP": 1000,
-            "baseDEF": 37,
+            "basePATK": 50,
+            "baseMATK": 53,
+            "basePDEF": 37,
+            "baseMDEF": 37,
             "EXP": 1000,
             "money": 1000
           }

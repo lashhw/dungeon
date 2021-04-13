@@ -9,7 +9,7 @@
 class GameCharactor : public Object {
 public:
     static const vector<string> EQUIP_TYPES;
-    static int getCalculatedDamage(int ATK, int DEF);
+    static int getCalculatedDamage(int PATK, int MATK, int PDEF, int MDEF);
     static string getBar(int num, int maxNum);
     static int getLVRequirement(int lv);
     int getHP() const;
@@ -22,8 +22,10 @@ public:
     void setMoney(int newMoney);
     void addToInventory(const Item &newItem);
     virtual int getMaxHP() const;
-    virtual int getATK() const;
-    virtual int getDEF() const;
+    virtual int getPATK() const;
+    virtual int getMATK() const;
+    virtual int getPDEF() const;
+    virtual int getMDEF() const;
     virtual json getJson() const override;
     friend ostream& operator<<(ostream& out, GameCharactor &gameCharactor);
 protected:
@@ -31,8 +33,10 @@ protected:
     GameCharactor(string name);
 
     int baseHP;
-    int baseATK;
-    int baseDEF;
+    int basePATK;
+    int baseMATK;
+    int basePDEF;
+    int baseMDEF;
     int damageTaken;
     int money;
     int EXP;

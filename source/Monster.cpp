@@ -3,7 +3,7 @@
 
 bool Monster::triggerEvent(Object &object) {
     Player& player = dynamic_cast<Player&>(object);
-    int damage = getCalculatedDamage(player.getATK(), this->getDEF());
+    int damage = getCalculatedDamage(player.getPATK(), player.getMATK(), this->getPDEF(), this->getMDEF());
     damage = min(damage, this->getHP());
     this->addDamageTaken(damage);
     cout << "You deal " << damage << " damage to [" << this->name << "]." << endl;
@@ -36,7 +36,7 @@ bool Monster::triggerEvent(Object &object) {
         return true;
     } else {
         cout << *this << endl;
-        damage = getCalculatedDamage(this->getATK(), player.getDEF());
+        damage = getCalculatedDamage(this->getPATK(), this->getMATK(), player.getPDEF(), player.getMDEF());
         damage = min(damage, player.getHP());
         player.addDamageTaken(damage);
         cout << "[" << this->name << "] " << "deals " << damage << " damage to you." << endl;

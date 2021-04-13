@@ -11,16 +11,28 @@ int GameCharactor::getMaxHP() const {
     return HP;
 }
 
-int GameCharactor::getATK() const {
-    int ATK = baseATK;
-    for (auto &item : equipped) ATK += item.second.getATK();
-    return ATK;
+int GameCharactor::getPATK() const {
+    int PATK = basePATK;
+    for (auto &item : equipped) PATK += item.second.getPATK();
+    return PATK;
 }
 
-int GameCharactor::getDEF() const {
-    int DEF = baseDEF;
-    for (auto &item : equipped) DEF += item.second.getDEF();
-    return DEF;
+int GameCharactor::getMATK() const {
+    int MATK = baseMATK;
+    for (auto &item : equipped) MATK += item.second.getMATK();
+    return MATK;
+}
+
+int GameCharactor::getPDEF() const {
+    int PDEF = basePDEF;
+    for (auto &item : equipped) PDEF += item.second.getPDEF();
+    return PDEF;
+}
+
+int GameCharactor::getMDEF() const {
+    int MDEF = baseMDEF;
+    for (auto &item : equipped) MDEF += item.second.getMDEF();
+    return MDEF;
 }
 
 void GameCharactor::addToInventory(const Item &newItem) {
@@ -32,11 +44,11 @@ void GameCharactor::addToInventory(const Item &newItem) {
     }
 }
 
-int GameCharactor::getCalculatedDamage(int ATK, int DEF) {
+int GameCharactor::getCalculatedDamage(int PATK, int MATK, int PDEF, int MDEF) {
     static random_device rd;
     static mt19937 gen(rd());
     static normal_distribution<double> d(1, 0.1);
-    return (int)round(ATK*(1.0/(1.0+DEF/100.0))*d(gen));
+    return (int)round(PATK*(1.0/(1.0+PDEF/100.0))*d(gen)+MATK*(1.0/(1.0+MDEF/100.0))*d(gen));
 }
 
 void GameCharactor::addDamageTaken(int damage) {
@@ -52,11 +64,13 @@ void GameCharactor::setMoney(int newMoney) {
 }
 
 GameCharactor::GameCharactor(string name, const json& statsJson) : Object(name) {
-    baseHP = baseATK = baseDEF = damageTaken = money = EXP = 0;
+    baseHP = basePATK = baseMATK = basePDEF = baseMDEF = damageTaken = money = EXP = 0;
     for (auto &stat : statsJson.items()) {
         if (stat.key() == "baseHP") baseHP = stat.value();
-        else if (stat.key() == "baseATK") baseATK = stat.value();
-        else if (stat.key() == "baseDEF") baseDEF = stat.value();
+        else if (stat.key() == "basePATK") basePATK = stat.value();
+        else if (stat.key() == "baseMATK") baseMATK = stat.value();
+        else if (stat.key() == "basePDEF") basePDEF = stat.value();
+        else if (stat.key() == "baseMDEF") baseMDEF = stat.value();
         else if (stat.key() == "damageTaken") damageTaken = stat.value();
         else if (stat.key() == "money") money = stat.value();
         else if (stat.key() == "EXP") EXP = stat.value();
@@ -82,7 +96,7 @@ GameCharactor::GameCharactor(string name, const json& statsJson) : Object(name) 
 }
 
 GameCharactor::GameCharactor(string name) : Object(name) {
-    baseHP = baseATK = baseDEF = damageTaken = money = EXP = 0;
+    baseHP = basePATK = baseMATK = basePDEF = baseMDEF = damageTaken = money = EXP = 0;
 }
 
 int GameCharactor::getHP() const {
@@ -120,8 +134,10 @@ string GameCharactor::getBriefStats() const {
 json GameCharactor::getJson() const {
     json j = Object::getJson();
     j["stats"]["baseHP"] = baseHP;
-    j["stats"]["baseATK"] = baseATK;
-    j["stats"]["baseDEF"] = baseDEF;
+    j["stats"]["basePATK"] = basePATK;
+    j["stats"]["baseMATK"] = baseMATK;
+    j["stats"]["basePDEF"] = basePDEF;
+    j["stats"]["baseMDEF"] = baseMDEF;
     j["stats"]["damageTaken"] = damageTaken;
     j["stats"]["money"] = money;
     j["stats"]["EXP"] = EXP;

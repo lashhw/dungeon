@@ -18,8 +18,10 @@ public:
     void addObjectPtrInRoom(shared_ptr<Object> newObjectPtr);
     void removeObjectInRoomByIdx(int objectIdxToDelete);
     virtual int getMaxHP() const override;
-    virtual int getATK() const override;
-    virtual int getDEF() const override;
+    virtual int getPATK() const override;
+    virtual int getMATK() const override;
+    virtual int getPDEF() const override;
+    virtual int getMDEF() const override;
     virtual bool triggerEvent(Object &object) override;
     virtual string getInteractMessage() const override;
     virtual string getTag() const override;

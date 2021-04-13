@@ -7,8 +7,10 @@ class Item : public Object {
 public:
     Item(const string &name, const json &properties);
     int getHP() const;
-    int getATK() const;
-    int getDEF() const;
+    int getPATK() const;
+    int getMATK() const;
+    int getPDEF() const;
+    int getMDEF() const;
     string getType() const;
     string getInfo(bool withType = false) const;
     virtual bool triggerEvent(Object &object) override;
@@ -20,8 +22,10 @@ public:
 private:
     string type;
     int HP;
-    int ATK;
-    int DEF;
+    int PATK;
+    int MATK;
+    int PDEF;
+    int MDEF;
 };
 
 #endif //DUNGEON_ITEM_H

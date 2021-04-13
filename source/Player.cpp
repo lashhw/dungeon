@@ -12,18 +12,32 @@ int Player::getMaxHP() const {
     return HP;
 }
 
-int Player::getATK() const {
+int Player::getPATK() const {
     int LV = getLV();
-    int ATK = (int)(baseATK*(1+0.05*(LV-1)*(LV-1)));
-    for (auto &item : equipped) ATK += item.second.getATK();
-    return ATK;
+    int PATK = (int)(basePATK*(1+0.05*(LV-1)*(LV-1)));
+    for (auto &item : equipped) PATK += item.second.getPATK();
+    return PATK;
 }
 
-int Player::getDEF() const {
+int Player::getMATK() const {
     int LV = getLV();
-    int DEF = (int)(baseDEF*(1+0.05*(LV-1)*(LV-1)));
-    for (auto &item : equipped) DEF += item.second.getDEF();
-    return DEF;
+    int MATK = (int)(baseMATK*(1+0.05*(LV-1)*(LV-1)));
+    for (auto &item : equipped) MATK += item.second.getMATK();
+    return MATK;
+}
+
+int Player::getPDEF() const {
+    int LV = getLV();
+    int PDEF = (int)(basePDEF*(1+0.05*(LV-1)*(LV-1)));
+    for (auto &item : equipped) PDEF += item.second.getPDEF();
+    return PDEF;
+}
+
+int Player::getMDEF() const {
+    int LV = getLV();
+    int MDEF = (int)(baseMDEF*(1+0.05*(LV-1)*(LV-1)));
+    for (auto &item : equipped) MDEF += item.second.getMDEF();
+    return MDEF;
 }
 
 void Player::printStats() const {
@@ -32,8 +46,10 @@ void Player::printStats() const {
     unformattedSS << "Name: " << name << endl
                   << "LV: " << LV << " " << getBar(EXP-getLVRequirement(LV), getLVRequirement(LV+1)-getLVRequirement(LV)) << endl
                   << "HP: " << getBar(getHP(), getMaxHP()) << endl
-                  << "ATK: " << getATK() << endl
-                  << "DEF: " << getDEF() << endl
+                  << "PATK: " << getPATK() << endl
+                  << "MATK: " << getMATK() << endl
+                  << "PDEF: " << getPDEF() << endl
+                  << "MDEF: " << getMDEF() << endl
                   << "Money: $" << money;
     string unformatted = unformattedSS.str();
     cout << Dungeon::getBoxedString(unformatted, 80, 2, true, true) << endl;

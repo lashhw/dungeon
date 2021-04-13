@@ -4,11 +4,13 @@
 using nlohmann::json;
 
 Item::Item(const string &name, const json &properties):Object(name) {
-    ATK = DEF = HP = 0;
+    PATK = MATK = PDEF = MDEF = HP = 0;
     type = properties["type"];
     for (auto &property : properties.items()) {
-        if (property.key() == "ATK") ATK = property.value();
-        else if (property.key() == "DEF") DEF = property.value();
+        if (property.key() == "PATK") PATK = property.value();
+        else if (property.key() == "MATK") MATK = property.value();
+        else if (property.key() == "PDEF") PDEF = property.value();
+        else if (property.key() == "MDEF") MDEF = property.value();
         else if (property.key() == "HP") HP = property.value();
     }
 }
@@ -33,12 +35,20 @@ int Item::getHP() const {
     return HP;
 }
 
-int Item::getATK() const {
-    return ATK;
+int Item::getPATK() const {
+    return PATK;
 }
 
-int Item::getDEF() const {
-    return DEF;
+int Item::getMATK() const {
+    return MATK;
+}
+
+int Item::getPDEF() const {
+    return PDEF;
+}
+
+int Item::getMDEF() const {
+    return MDEF;
 }
 
 string Item::getInfo(bool withType) const {
@@ -48,11 +58,17 @@ string Item::getInfo(bool withType) const {
     if (HP != 0) {
         propertiesInfo.push_back(make_pair("HP", to_string(HP)));
     }
-    if (ATK != 0) {
-        propertiesInfo.push_back(make_pair("ATK", to_string(ATK)));
+    if (PATK != 0) {
+        propertiesInfo.push_back(make_pair("PATK", to_string(PATK)));
     }
-    if (DEF != 0) {
-        propertiesInfo.push_back(make_pair("DEF", to_string(DEF)));
+    if (MATK != 0) {
+        propertiesInfo.push_back(make_pair("MATK", to_string(MATK)));
+    }
+    if (PDEF != 0) {
+        propertiesInfo.push_back(make_pair("PDEF", to_string(PDEF)));
+    }
+    if (MDEF != 0) {
+        propertiesInfo.push_back(make_pair("MDEF", to_string(MDEF)));
     }
     if (withType) {
         propertiesInfo.push_back(make_pair("Type", type));
@@ -78,7 +94,9 @@ json Item::getJson() const {
     json j = Object::getJson();
     j["properties"]["type"] = type;
     j["properties"]["HP"] = HP;
-    j["properties"]["ATK"] = ATK;
-    j["properties"]["DEF"] = DEF;
+    j["properties"]["PATK"] = PATK;
+    j["properties"]["MATK"] = MATK;
+    j["properties"]["PDEF"] = PDEF;
+    j["properties"]["MDEF"] = MDEF;
     return j;
 }
