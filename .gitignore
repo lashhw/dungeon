@@ -10,6 +10,8 @@
 !data/*
 !latex/
 !latex/*
+!latex/images
+!latex/images/*
 
 !CMakeLists.txt
 !main.cpp
