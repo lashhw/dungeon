@@ -8,7 +8,11 @@
 !header/*
 !data/
 !data/*
+!latex/
+!latex/*
 
 !CMakeLists.txt
 !main.cpp
+!README.md
+!Dungeon_Report.pdf
 !.gitignore
