@@ -1,9 +1,45 @@
 #include "Monster.h"
 #include "Player.h"
+#include "Dungeon.h"
 
 bool Monster::triggerEvent(Object &object) {
     Player& player = dynamic_cast<Player&>(object);
-    int damage = getCalculatedDamage(player.getPATK(), player.getMATK(), this->getPDEF(), this->getMDEF());
+
+    vector<string> choices;
+    string input;
+    cout << "Choose attack type:" << endl;
+    cout << Dungeon::CHOICE_START << "Normal attack (0, default)" << endl;
+    choices.push_back("0");
+    for (size_t i = 0; i < player.skills.size(); i++) {
+        cout << Dungeon::CHOICE_START << player.skills[i].name;
+        if (player.skills[i].CDCounter == 0) {
+            cout << " [READY] (" << i + 1 << ")" << endl;
+            choices.push_back(to_string(i + 1));
+        } else {
+            cout << " [CD: " << player.skills[i].CDCounter << "]" << endl;
+        }
+    }
+    input = Dungeon::getResponce(choices, true);
+    Dungeon::clearConsole();
+
+    for (auto &s : player.skills) {
+        s.decreaseCD();
+    }
+
+    int damage;
+    if (input == "0" || input == "") {
+        damage = getCalculatedDamage(player.getPATK(), player.getMATK(), this->getPDEF(), this->getMDEF());
+    } else {
+        int skillIdx = stoi(input) - 1;
+        Skill& skillRef = player.skills[skillIdx];
+        skillRef.resetToMaxCD();
+        damage = getCalculatedDamage(skillRef.PATK, skillRef.MATK, this->getPDEF(), this->getMDEF());
+        if (skillRef.HP != 0) {
+            int damageToDecrease = decreaseDamageTaken(skillRef.HP);
+            cout << "You healed yourself by " << damageToDecrease << " HP." << endl;
+        }
+    }
+
     damage = min(damage, this->getHP());
     this->addDamageTaken(damage);
     cout << "You deal " << damage << " damage to [" << this->name << "]." << endl;
@@ -24,14 +60,8 @@ bool Monster::triggerEvent(Object &object) {
             player.setMoney(player.getMoney() + this->getMoney());
         }
         if (this->EXP != 0) {
-            int oldLV = player.getLV();
             cout << "You got " << this->EXP << " EXP from [" << this->name << "]!" << endl;
             player.addEXP(this->EXP);
-            int newLV = player.getLV();
-            if (newLV >= oldLV) {
-                cout << "You levelled up! Your HP is full now." << endl;
-                player.setDamageTaken(0);
-            }
         }
         return true;
     } else {

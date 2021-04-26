@@ -17,10 +17,11 @@ public:
     int getMoney() const;
     string getBriefStats() const;
     void addDamageTaken(int damage);
-    void setDamageTaken(int damage);
-    void addEXP(int exp);
+    int decreaseDamageTaken(int damage);
+    int getDamageTaken() const;
     void setMoney(int newMoney);
     void addToInventory(const Item &newItem);
+    virtual void addEXP(int exp);
     virtual int getMaxHP() const;
     virtual int getPATK() const;
     virtual int getMATK() const;

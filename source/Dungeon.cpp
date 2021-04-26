@@ -27,7 +27,7 @@ json Dungeon::getJsonFromFile(string fileName) {
     return js;
 }
 
-string Dungeon::getResponce(const vector<string> &choices) {
+string Dungeon::getResponce(const vector<string> &choices, bool allowEmpty) {
     for (;;) {
         cout << "(";
         for (int i = 0; i < choices.size(); i++) {
@@ -39,7 +39,8 @@ string Dungeon::getResponce(const vector<string> &choices) {
         string input;
         getline(cin, input);
         trim(input);
-        if (find(choices.begin(), choices.end(), input) != choices.end())
+        if (find(choices.begin(), choices.end(), input) != choices.end() ||
+            (allowEmpty && input == ""))
             return input;
 
         cout << "Wrong Input! ";
@@ -309,6 +310,7 @@ void Dungeon::loadJson(json gameDataJson) {
     json playerJson = gameDataJson["player"];
     player = Player(playerJson["name"], playerJson["stats"],
                     &rooms.find(playerJson["currRoom"])->second, &rooms.find(playerJson["prevRoom"])->second);
+    player.updateSkills();
 
     exitRoom = gameDataJson["exitRoom"];
 }

@@ -15,6 +15,7 @@ add_executable(
         header/Object.h
         header/Player.h
         header/Room.h
+        header/Skill.h
         source/Chest.cpp
         source/Dungeon.cpp
         source/GameCharactor.cpp
@@ -24,4 +25,5 @@ add_executable(
         source/Object.cpp
         source/Player.cpp
         source/Room.cpp
+        source/Skill.cpp
 )

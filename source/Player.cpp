@@ -5,6 +5,13 @@
 
 using namespace std;
 
+const vector<Skill> Player::ALL_SKILLS = {
+    //    name      LV CD PATK MATK HP
+    Skill("Skill1", 2, 5, 30,  0,   0),
+    Skill("Skill2", 3, 4, 20,  20,  0),
+    Skill("Heal"  , 5, 3, 0,   0,   100)
+};
+
 int Player::getMaxHP() const {
     int LV = getLV();
     int HP = (int)(baseHP*(1+0.05*(LV-1)*(LV-1)));
@@ -50,7 +57,13 @@ void Player::printStats() const {
                   << "MATK: " << getMATK() << endl
                   << "PDEF: " << getPDEF() << endl
                   << "MDEF: " << getMDEF() << endl
-                  << "Money: $" << money;
+                  << "Money: $" << money << endl
+                  << "Skills: ";
+    for (size_t i = 0; i < skills.size(); i++) {
+        if (i != 0) unformattedSS << ", ";
+        unformattedSS << skills[i].name;
+    }
+
     string unformatted = unformattedSS.str();
     cout << Dungeon::getBoxedString(unformatted, 80, 2, true, true) << endl;
 
@@ -105,7 +118,7 @@ bool Player::triggerEvent(Object &object) { // print / change equipment
             } else if (itemToEquip.getType() == "usable") {
                 int damageToDecrease = min(itemToEquip.getHP(), damageTaken);
                 damageTaken -= damageToDecrease;
-                cout << "You healed yourself by " << damageToDecrease << " HP" << endl;
+                cout << "You healed yourself by " << damageToDecrease << " HP." << endl;
             }
         }
     }
@@ -157,4 +170,24 @@ void Player::removeObjectInRoomByIdx(int objectIdxToDelete) {
 
 void Player::changeToPrevRoom() {
     currRoomPtr = prevRoomPtr;
+}
+
+void Player::addEXP(int exp) {
+    int oldLV = getLV();
+    GameCharactor::addEXP(exp);
+    int newLV = getLV();
+    if (newLV >= oldLV) {
+        cout << "You levelled up! Your HP is full now." << endl;
+        decreaseDamageTaken(getDamageTaken());
+        updateSkills(true);
+    }
+}
+
+void Player::updateSkills(bool verbose) {
+    for (const auto &s : ALL_SKILLS) {
+        if (s.lvRequirement <= getLV() && find(skills.begin(), skills.end(), s) == skills.end()) {
+            if (verbose) cout << "You unlocked a new skill [" << s.name << "]." << endl;
+            skills.push_back(s);
+        }
+    }
 }

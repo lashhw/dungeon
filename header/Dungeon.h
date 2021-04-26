@@ -16,7 +16,7 @@ enum gameState {win, lose, indeterminate};
 class Dungeon {
 public:
     static json getJsonFromFile(string fileName);
-    static string getResponce(const vector<string> &choices);
+    static string getResponce(const vector<string> &choices, bool allowEmpty = false);
     static string getResponce();
     static string getBoxedString(string unformatted, size_t width, size_t marginLeft, bool upBorder, bool bottomBorder);
     static void clearConsole();

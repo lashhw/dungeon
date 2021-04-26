@@ -169,6 +169,12 @@ void GameCharactor::addEXP(int exp) {
     EXP += exp;
 }
 
-void GameCharactor::setDamageTaken(int damage) {
-    this->damageTaken = damage;
+int GameCharactor::getDamageTaken() const {
+    return damageTaken;
+}
+
+int GameCharactor::decreaseDamageTaken(int damage) {
+    int oldDamageTaken = this->damageTaken;
+    this->damageTaken = max(0, oldDamageTaken - damage);
+    return oldDamageTaken - this->damageTaken;
 }
