@@ -11,13 +11,12 @@ bool Monster::triggerEvent(Object &object) {
     cout << Dungeon::CHOICE_START << "Normal attack (0, default)" << endl;
     choices.push_back("0");
     for (size_t i = 0; i < player.skills.size(); i++) {
-        cout << Dungeon::CHOICE_START << player.skills[i].name;
+        cout << Dungeon::CHOICE_START << player.skills[i].getBriefInfo();
         if (player.skills[i].CDCounter == 0) {
-            cout << " [READY] (" << i + 1 << ")" << endl;
+            cout << " (" << i + 1 << ")";
             choices.push_back(to_string(i + 1));
-        } else {
-            cout << " [CD: " << player.skills[i].CDCounter << "]" << endl;
         }
+        cout << endl;
     }
     input = Dungeon::getResponce(choices, true);
     Dungeon::clearConsole();

@@ -58,10 +58,10 @@ void Player::printStats() const {
                   << "PDEF: " << getPDEF() << endl
                   << "MDEF: " << getMDEF() << endl
                   << "Money: $" << money << endl
-                  << "Skills: ";
-    for (size_t i = 0; i < skills.size(); i++) {
-        if (i != 0) unformattedSS << ", ";
-        unformattedSS << skills[i].name;
+                  << "Skills:";
+    for (const auto &s : skills) {
+        unformattedSS << endl;
+        unformattedSS << string(4, ' ') << s.getInfo();
     }
 
     string unformatted = unformattedSS.str();

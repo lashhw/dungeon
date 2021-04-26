@@ -19,7 +19,7 @@ public:
     void changeToPrevRoom();
     void addObjectPtrInRoom(shared_ptr<Object> newObjectPtr);
     void removeObjectInRoomByIdx(int objectIdxToDelete);
-    void updateSkills(bool verbose = true);
+    void updateSkills(bool verbose = false);
     virtual void addEXP(int exp);
     virtual int getMaxHP() const override;
     virtual int getPATK() const override;
