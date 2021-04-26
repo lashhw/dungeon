@@ -8,10 +8,10 @@
       "basePDEF": 5,
       "baseMDEF": 5,
       "money": 0,
-      "EXP": 0
+      "EXP": 0,
+      "equipped": [],
+      "unequipped": []
     },
-    "equipped": [],
-    "unequipped": [],
     "currRoom": 0,
     "prevRoom": 0
   },
@@ -142,7 +142,7 @@
           "name": "Priest Wand",
           "properties": {
             "type": "weapon",
-            "MATK": 12
+            "MATK": 24
           }
         }
       ]
@@ -197,19 +197,19 @@
             "basePDEF": 10,
             "baseMDEF": 10,
             "money": 97,
-            "EXP": 120
-          },
-          "equipped": [
-            {
-              "name": "Iron Chestplate",
-              "properties": {
-                "type": "chestplate",
-                "basePDEF": 17,
-                "baseMDEF": 6,
-                "baseHP": 33
+            "EXP": 120,
+            "equipped": [
+              {
+                "name": "Iron Chestplate",
+                "properties": {
+                  "type": "chestplate",
+                  "PDEF": 17,
+                  "MDEF": 6,
+                  "HP": 33
+                }
               }
-            }
-          ]
+            ]
+          }
         }
       ]
     },
@@ -352,19 +352,19 @@
             "basePDEF": 12,
             "baseMDEF": 12,
             "money": 500,
-            "EXP": 987
-          },
-          "equipped": [
-            {
-              "name": "Chain Helmet",
-              "properties": {
-                "type": "helmet",
-                "HP": 67,
-                "PDEF": 10,
-                "MDEF": 25
+            "EXP": 987,
+            "equipped": [
+              {
+                "name": "Chain Helmet",
+                "properties": {
+                  "type": "helmet",
+                  "HP": 67,
+                  "PDEF": 10,
+                  "MDEF": 25
+                }
               }
-            }
-          ]
+            ]
+          }
         }
       ]
     },
