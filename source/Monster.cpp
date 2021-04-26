@@ -34,7 +34,7 @@ bool Monster::triggerEvent(Object &object) {
         skillRef.resetToMaxCD();
         damage = getCalculatedDamage(skillRef.PATK, skillRef.MATK, this->getPDEF(), this->getMDEF());
         if (skillRef.HP != 0) {
-            int damageToDecrease = decreaseDamageTaken(skillRef.HP);
+            int damageToDecrease = player.decreaseDamageTaken(skillRef.HP);
             cout << "You healed yourself by " << damageToDecrease << " HP." << endl;
         }
     }

@@ -174,7 +174,7 @@ int GameCharactor::getDamageTaken() const {
 }
 
 int GameCharactor::decreaseDamageTaken(int damage) {
-    int oldDamageTaken = this->damageTaken;
-    this->damageTaken = max(0, oldDamageTaken - damage);
-    return oldDamageTaken - this->damageTaken;
+    int oldDamageTaken = damageTaken;
+    damageTaken = max(0, damageTaken - damage);
+    return oldDamageTaken - damageTaken;
 }
