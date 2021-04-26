@@ -39,7 +39,7 @@
             \text{     }
             \begin{minipage}[c]{0.4\linewidth}
                 \begin{center}
-                \includegraphics[width=0.7\linewidth]{room_uml}
+                \includegraphics[width=0.5\linewidth]{room_uml}
                 \end{center}
                 \caption{Room's UML Diagram}
             \end{minipage}
@@ -47,9 +47,11 @@
     \end{figure}
     
     \subsection{Actions Menu}
-    The actions menu is implemented by checking whether the room is connected to other room, and then loop through all objects in the room (by calling virtual function \texttt{getInteractMessage()}). If there are monsters in the room, then all the rooms except the previous one are locked. In this case, the only movement player can make is retreat. Each action is assigned with a special character (e.g. \textit{a} represents moving to the left room, \textit{1} might be talking to NPC).
+    The actions menu is implemented by checking whether the current room is connected to other rooms, and then loop through all objects in the room (by calling their virtual function \texttt{getInteractMessage()}). If there are monsters in the room, then all rooms except the previous one are locked. In this case, the only movement player can make is retreat.
     \par
-    Once the program printed out all the actions available, it then prompt user to input a character. If user input \textit{w}, \textit{a}, \textit{s}, or \textit{d}, the player will move to its corresponding room. If user input \textit{e}, player's stats and inventory will be printed out. If the input is a numeric value (which signifies objects' unique number in that room), that object's virtual function \texttt{triggerEvent()} will be called. 
+    Each action is assigned with a special character (e.g. \textit{a} represents moving to the left room, \textit{1} might be talking to NPC).
+    \par
+    Once the program prints out all available actions, it then prompts user to input a character. If user input \textit{w}, \textit{a}, \textit{s}, or \textit{d}, the player will move to its corresponding room. If user input \textit{e}, player's stats and inventory will be printed out. If the input is a numeric value (which signifies objects' unique number in that room), that object's virtual function \texttt{triggerEvent()} will be called. 
     
     \subsection{Movement}
     The movement is simply done by calling player's private method \texttt{changeRoom()}. It can update \texttt{Player}'s \texttt{currRoomPtr} and \texttt{prevRoomPtr}, which are pointer to current room and pointer to previous room, respectively.
@@ -135,16 +137,23 @@
         \item Enhanced Fighting System
         \begin{itemize}
             \item $ATK$/$DEF$ in this game are divided into two types: physical and magical. Different types of $ATK$ can deal different damage to monsters or player. Similarily, different types of $DEF$ can shield different types of $ATK$. (See \ref{subsection:fighting} for further detail.)
-            \item When monsters died, their equipment will dropped onto the ground. Monsters' $EXP$ and $Money$ will also transfer to player. If player's $LV$ upgrades after defeating the monster, his/her HP will be refilled.
+        \end{itemize}
+        \item Skill
+        \begin{itemize}
+            \item Player unlocks skills when they reaches some certain levels. Every skill has its own properties, including $PATK$, $MATK$, $HP$ and $CD$. $CD$ stands for ``cooldown''. Player can use a skill only if that skill is ready (when $CD$ equals to 0). Each attack can reduce $CD$ by one.
         \end{itemize}
         \item Equipment System
         \begin{itemize}
             \item Player can choose a variety of weapons and armors to prepare for different combat situation. For example, armors that can shield magical damage are good choices when attacking \textit{wizard} or \textit{magician}; weapons that has high physical damage are excellent choices when attacking monsters that are weak in physical defense.
             \item Furthermore, I divided items in this game into 7 categories:  \textit{Helmet}, \textit{Chestplate}, \textit{Leggings}, \textit{Boots}, \textit{Shield}, \textit{Weapon} and \textit{Usable}. Player can only equip one equipment of the same type (\textit{Usable} can only be used once).
         \end{itemize}
+        \item Drop Items When Monster Dies
+        \begin{itemize}
+            \item When monster dies, its equipment will drop onto the ground. That monster's $EXP$ and $Money$ will also transfer to player. If player's $LV$ upgrades after defeating the monster, his/her $HP$ will be refilled.
+        \end{itemize}
         \item Trading System
         \begin{itemize}
-            \item I added $Money$ in this game, player can use money to trade with NPC. (See \ref{subsection:npc} for further detail.)
+            \item I added money in this game, player can use money to trade with NPC. (See \ref{subsection:npc} for further detail.)
         \end{itemize}
         \item Customizable Game
         \begin{itemize}
@@ -156,11 +165,11 @@
         \end{itemize}
         \item Use Smart Pointer to Prevent Memory Leak
         \begin{itemize}
-            \item I used \texttt{shared\_ptr} extensively in this project. This smart pointer can avoid the problem of dangling pointer, so that memory leak would not occur.
+            \item I used \texttt{shared\_ptr} extensively in this project. This smart pointer can avoid the problem of dangling pointer, so memory leak would not occur.
         \end{itemize}
         \item Better Gaming Experience
         \begin{itemize}
-            \item I've made a lot of optimization on the interface of the game to make the game more interesting. (See section \ref{subsection:results} for further detail.)
+            \item I've made a lot of optimization on the interface of the game to make the game more attractive. (See section \ref{subsection:results} for further detail.)
         \end{itemize}
         \item This Report XD
         \begin{itemize}
@@ -208,15 +217,15 @@
 \section{Discussion}
 
     In this section, I'll talk about some bad designs I've made in this project. Although these bad designs don't affect the functionality of the program, it can have great impact on extensibility and readability of the project. Therefore, I think it's necessary to record these mistakes, so that I can avoid these errors in the future.
-    \subsection{the parameters in \texttt{triggerEvent()} should be modified}
+    \subsection{The parameters in \texttt{triggerEvent()} should be modified}
     In this project, the function signature of \texttt{triggerEvent} is \texttt{triggerEvent(\textbf{Object\&})}. However, it seems that \texttt{triggerEvent(\textbf{Player\&})} would make more sense, since only \texttt{Player} can interact with \texttt{Object}. If \texttt{triggerEvent} accepts \texttt{Object\&} as its parameter, then it means that \texttt{Object} can interact with other \texttt{Object}, but I've not implemented this feature so far.
     \par
     Therefore, I think it's better to substitute \texttt{Object\&} with \texttt{Player\&} in \texttt{triggerEvent()}. However, it can lead to another problem - \textbf{circular dependency} - because \texttt{triggerEvent(Player\&)} is declared in \texttt{Object}, \texttt{Player} is also inherited from \texttt{Object}. Compile errors rises after I changed \texttt{Object\&} to \texttt{Player\&} in \texttt{triggerEvent()}'s parameter list.
     
     \subsection{Interactable objects should be distinguished from ordinary \texttt{Object}}
-    In this game, \texttt{Room} has a member variable \texttt{objectPtrs}, which has the type \texttt{vector<shared\_ptr<Object>>} and it can store pointers of objects in that room. However, it's unreasonable to store \texttt{Player*} in \texttt{objectPtrs}, since there are only one \texttt{Player} in the game. However, it is allowed to do so, because \texttt{Player} is an \texttt{Object}. When a \texttt{Player*} is stored in \texttt{objectPtrs}, what should the program do when interacting with that \texttt{Player}? It's kind of weird to interact with other \texttt{Player} in a single-player game.
+    In this game, \texttt{Room} has a member variable \texttt{objectPtrs}, which has the type \texttt{vector<shared\_ptr<Object>>} and it can store pointers of objects in that room. However, it's unreasonable to store \texttt{Player*} in \texttt{objectPtrs}, since there are only one \texttt{Player} in the game. However, it is allowed to do so, because \texttt{Player} is an \texttt{Object}. When a \texttt{Player*} is stored in \texttt{objectPtrs}, what should the program do when interacting with that \texttt{Player}? It's kind of weird to interact with other \texttt{Player} in this single-player game.
     \par
-    Therefore, it think we should distinguish ordinary \texttt{Object} from interactable objects, i.e. \texttt{Chest}, \texttt{Item}, \texttt{Monster}, and \texttt{NPC}. Maybe we can create a new class named \texttt{InteractableObject}, and place \texttt{triggerEvent()} in it. \texttt{Chest}, \texttt{Item}, \texttt{Monster} and \texttt{NPC} are inherited from both \texttt{Object} and \texttt{InteractableObject} (by using multiple inheritance). In this way, the data type of \texttt{objectPtrs} can be changed to \texttt{vector<shared\_ptr<InteractableObject>>}, so \texttt{Player} would not be considered as an interactable object (because it is inherited only from \texttt{Object}).
+    Therefore, I think we should distinguish ordinary \texttt{Object} from interactable objects, i.e. \texttt{Chest}, \texttt{Item}, \texttt{Monster}, and \texttt{NPC}. Maybe we can create a new class named \texttt{InteractableObject}, and place \texttt{triggerEvent()} in it. \texttt{Chest}, \texttt{Item}, \texttt{Monster} and \texttt{NPC} are inherited from both \texttt{Object} and \texttt{InteractableObject} (by using multiple inheritance). In this way, the data type of \texttt{objectPtrs} can be changed to \texttt{vector<shared\_ptr<InteractableObject>>}, so \texttt{Player} would not be considered as an interactable object (because it is inherited only from \texttt{Object}).
 
 \section{Conclusion}
 This project was made possible thanks to various advantages of OOP principles. OOP allowed this project to become more concise, well-organized, and easy-to-read. On working with this project, I encounter many difficulties related to OOP. By tracing errors generated at compilation times, I learnt a lot when solving these problems. I'm sure that I become much more familiar with C++ after finishing this project.
