@@ -23,7 +23,7 @@ bool Item::triggerEvent(Object &object) {
 }
 
 string Item::getInteractMessage() const {
-    return "Item: pick up " + getInfo();
+    return "Item: pick up [" + name + "]";
 }
 
 ostream &operator<<(ostream &out, Item item) {
