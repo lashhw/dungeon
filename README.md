@@ -1,6 +1,6 @@
 # dungeon
 
-NYCU 2021 Spring OOP Assignment
+NYCU 2021 Spring "Data Structures and Object-oriented Programming" Final Project
 
 ## Build
 
